@@ -15,8 +15,7 @@ describe('exchange rates from dolar-blue.net', function(){
 
 
                 var d = new Date(data.datetime);
-                console.log(d);
-                console.log(d > new Date(0));
+                assert.ok( d > new Date(0) );
                 var before =  new Date('2013-12-16 18:00:00');
                 assert.ok( d > before);
                 done();
