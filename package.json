@@ -16,17 +16,18 @@
     "bugs": {
         "url": "https://github.com/ematiu/dolar-blue/issues"
     },
-  "license": "MIT",
-  "keywords": [
-    "dolar",
-    "dolar blue",
-    "argentina",
-    "pesos",
-    "exchange",
-    "money",
-    "rate"
-  ],
-  "engines": {
-    "node": "*"
-  } 
+    "homepage": "https://github.com/ematiu/dolar-blue",
+    "license": "MIT",
+    "keywords": [
+        "dolar",
+        "dolar blue",
+        "argentina",
+        "pesos",
+        "exchange",
+        "money",
+        "rate"
+    ],
+    "engines": {
+        "node": "*"
+    } 
 }
