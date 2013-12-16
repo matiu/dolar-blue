@@ -9,7 +9,7 @@ Client for the dolar-blue.net API in nodejs
 ``` javascript
 var dolarblue = require('dolar-blue');
 
-dolarblue.getData(function(data){
+dolarblue(function(data){
     console.log(data.datetime": el dolar blue esta a " + data.buy + " - " + data.sell);
     console.log("Debería comprar?");
 });
@@ -18,7 +18,7 @@ dolarblue.getData(function(data){
 
 ## API
 
-### getData(callback(data))
+### dolarblue(callback(data))
 
 *** callback *** 
     will be called is an object containing 3 members: buy, sell and datetime. Datetime's format is ISO8601 and is suitable for 
