@@ -21,7 +21,7 @@ dolarblue(function(data){
 ### dolarblue(callback(data))
 
 *** callback *** 
-    will be called is an object containing 3 members: buy, sell and datetime. Datetime's format is ISO8601 and is suitable for 
+    argument is an object with 3 members: buy, sell and datetime. Datetime's format is ISO8601 and is suitable for 
 ``` javascript
     var date = new Date(data.datetime);
 ```
