@@ -1,0 +1,32 @@
+{
+    "name": "dolar-blue",
+    "version": "0.0.1",
+    "private": false,
+    "dependencies": {
+        "json5": "*"
+    },
+    "author": {
+        "name": "Matias Alejo Garcia",
+        "email": "ematiu@gmail.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/ematiu/dolar-blue.git"
+    },
+    "bugs": {
+        "url": "https://github.com/ematiu/dolar-blue/issues"
+    },
+  "license": "MIT",
+  "keywords": [
+    "dolar",
+    "dolar blue",
+    "argentina",
+    "pesos",
+    "exchange",
+    "money",
+    "rate"
+  ],
+  "engines": {
+    "node": "*"
+  } 
+}
