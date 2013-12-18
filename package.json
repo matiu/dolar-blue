@@ -1,13 +1,13 @@
 {
     "name": "dolar-blue",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "private": false,
     "dependencies": {
         "json5": "*"
     },
     "author": {
         "name": "Matias Alejo Garcia",
-        "email": "ematiu@gmail.com"
+        "email": "ematiu (a) gmail.com"
     },
     "repository": {
         "type": "git",
