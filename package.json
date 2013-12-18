@@ -1,6 +1,6 @@
 {
     "name": "dolar-blue",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "private": false,
     "dependencies": {
         "json5": "*"
@@ -11,12 +11,12 @@
     },
     "repository": {
         "type": "git",
-        "url": "git://github.com/ematiu/dolar-blue.git"
+        "url": "git://github.com/matiu/dolar-blue.git"
     },
     "bugs": {
-        "url": "https://github.com/ematiu/dolar-blue/issues"
+        "url": "https://github.com/matiu/dolar-blue/issues"
     },
-    "homepage": "https://github.com/ematiu/dolar-blue",
+    "homepage": "https://github.com/matiu/dolar-blue",
     "license": "MIT",
     "keywords": [
         "dolar",
