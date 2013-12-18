@@ -20,8 +20,7 @@ describe('exchange rates from dolar-blue.net', function(){
                 assert.ok( d > before);
                 done();
             });
-        })
- 
+        });
   })
 })
 
