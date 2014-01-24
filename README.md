@@ -1,7 +1,7 @@
 dolar-blue
 ==========
 
-Client for the dolar-blue.net API in nodejs
+Client for LaNacion.com and dolar-blue.net API in nodejs
 
 
 ## Synopsis
@@ -25,6 +25,11 @@ dolarblue(function(data){
 ``` javascript
     var date = new Date(data.datetime);
 ```
+
+This will try LaNacion first, and dolar-blue.net if La Nacion fails.
+
+### dolarblue(src:"LaNacion", callback(data))
+### dolarblue(src:"DolarBlue", callback(data))
 
 ## TODO
 Support other sources of data.
