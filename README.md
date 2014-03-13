@@ -36,3 +36,6 @@ Support other sources of data.
 
 ## References
 http://www.eldolarblue.net/dolar-blue-web-services.php
+
+## Licence
+MIT
