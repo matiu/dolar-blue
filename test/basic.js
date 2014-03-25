@@ -8,13 +8,13 @@ describe('exchange rates', function(){
     describe('getData', function(){
 
         
-        it('should return current dolar blue BUY and SELL cotization, an datetime', function(done){
+        it('should return current dolar blue BUY and SELL rate, and a datetime', function(done){
             dolarblue.getData(function(data) {
                 assert.ok( data.buy > 0);
                 assert.ok( data.sell > 0);
 
 
-                var d = new Date(data.datetime);
+                var d = data.datetime;
                 assert.ok( d > new Date(0) );
                 var before =  new Date('2013-12-16 18:00:00');
                 assert.ok( d > before);
@@ -24,13 +24,13 @@ describe('exchange rates', function(){
     });
 
     describe('getData({src:LaNacion})', function(){
-        it('should return current dolar blue BUY and SELL cotization, an datetime', function(done){
+        it('should return current dolar blue BUY and SELL rate, and a datetime', function(done){
             dolarblue.getData({src:'LaNacion'}, function(data) {
                 assert.ok( data.buy > 0);
                 assert.ok( data.sell > 0);
 
 
-                var d = new Date(data.datetime);
+                var d = data.datetime;
                 assert.ok( d > new Date(0) );
                 var before =  new Date('2013-12-16 18:00:00');
                 assert.ok( d > before);
@@ -40,13 +40,30 @@ describe('exchange rates', function(){
     });
 
     describe.skip('getData({src:DolarBlue})', function(){
-        it('should return current dolar blue BUY and SELL cotization, an datetime', function(done){
+        it('should return current dolar blue BUY and SELL rate, and a datetime', function(done){
             dolarblue.getData({src:'DolarBlue'}, function(data) {
                 assert.ok( data.buy > 0);
                 assert.ok( data.sell > 0);
 
 
-                var d = new Date(data.datetime);
+                var d = data.datetime;
+                assert.ok( d > new Date(0) );
+                var before =  new Date('2013-12-16 18:00:00');
+                assert.ok( d > before);
+                done();
+            });
+        });
+    });
+
+
+    describe('getData({src:Bluelytics})', function(){
+        it('should return current dolar blue BUY and SELL rate, and a datetime', function(done){
+            dolarblue.getData({src:'Bluelytics'}, function(data) {
+                assert.ok( data.buy > 0);
+                assert.ok( data.sell > 0);
+
+
+                var d = data.datetime;
                 assert.ok( d > new Date(0) );
                 var before =  new Date('2013-12-16 18:00:00');
                 assert.ok( d > before);
