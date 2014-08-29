@@ -1,7 +1,7 @@
 dolar-blue
 ==========
 
-Client for LaNacion.com and dolar-blue.net API in nodejs
+API to get the *dolar blue* rate in Argentina, from various sources.
 
 
 ## Synopsis
@@ -26,16 +26,17 @@ dolarblue(function(data){
     var date = new Date(data.datetime);
 ```
 
-This will try LaNacion first, and dolar-blue.net if La Nacion fails.
+This will try LaNacion first, Bluelytics second, and then dolar-blue.net.
 
-### dolarblue(src:"LaNacion", callback(data))
-### dolarblue(src:"DolarBlue", callback(data))
+You can especify a source also:
+```
+dolarblue(src:"LaNacion", callback(data))
+dolarblue(src:"DolarBlue", callback(data))
+dolarblue(src:"Bluelytics", callback(data))
+```
 
 ## TODO
-Support other sources of data.
-
-## References
-http://www.eldolarblue.net/dolar-blue-web-services.php
+Support more data sources.
 
 ## Licence
 MIT
