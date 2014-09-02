@@ -1,34 +1,34 @@
 {
-    "name": "dolar-blue",
-    "version": "0.0.9",
-    "private": false,
-    "dependencies": {
-        "json5": "*",
-        "async": "*"
-    },
-    "author": {
-        "name": "Matias Alejo Garcia",
-        "email": "ematiu (a) gmail.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/matiu/dolar-blue.git"
-    },
-    "bugs": {
-        "url": "https://github.com/matiu/dolar-blue/issues"
-    },
-    "homepage": "https://github.com/matiu/dolar-blue",
-    "license": "MIT",
-    "keywords": [
-        "dolar",
-        "dolar blue",
-        "argentina",
-        "pesos",
-        "exchange",
-        "money",
-        "rate"
-    ],
-    "engines": {
-        "node": "*"
-    } 
+  "name": "dolar-blue",
+  "version": "0.1.0",
+  "private": false,
+  "dependencies": {
+    "json5": "*",
+    "async": "*"
+  },
+  "author": {
+    "name": "Matias Alejo Garcia",
+    "email": "ematiu (a) gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/matiu/dolar-blue.git"
+  },
+  "bugs": {
+    "url": "https://github.com/matiu/dolar-blue/issues"
+  },
+  "homepage": "https://github.com/matiu/dolar-blue",
+  "license": "MIT",
+  "keywords": [
+    "dolar",
+    "dolar blue",
+    "argentina",
+    "pesos",
+    "exchange",
+    "money",
+    "rate"
+  ],
+  "engines": {
+    "node": "*"
+  }
 }
