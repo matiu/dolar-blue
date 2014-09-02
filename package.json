@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": false,
   "dependencies": {
-    "json5": "*",
-    "async": "*"
+    "chai": "*",
+    "nock": "*",
+    "sinon": "*"
   },
   "author": {
     "name": "Matias Alejo Garcia",
