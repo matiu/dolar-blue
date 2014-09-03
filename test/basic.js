@@ -216,7 +216,7 @@ describe('exchange rates', function(){
       dolarblue.getData(function(err, data) {
         should.exist(err);
         should.not.exist(data);
-        err.should.equal('no data')
+        err.should.equal('no data');
         done();
       });
     });
@@ -367,7 +367,7 @@ describe('exchange rates', function(){
       dolarblue.getData(function(err, data) {
         should.exist(err);
         should.not.exist(data);
-        err.should.equal('no data')
+        err.should.equal('no data');
         done();
       });
     });
@@ -424,7 +424,7 @@ describe('exchange rates', function(){
       dolarblue.getData({src:'LaNacion'}, function(err, data) {
         should.exist(err);
         should.not.exist(data);
-        err.should.equal('no data')
+        err.should.equal('no data');
         done();
       });
     });
