@@ -1,4 +1,4 @@
-var assert = require("assert")
+var assert = require('assert');
 var dolarblue = require('../lib/dolar-blue');
 var nock = require('nock');
 var should = require('chai').should();
