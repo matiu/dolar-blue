@@ -23,20 +23,56 @@ dolarblue(function (err, data) {
 
 ### dolarblue( callback(err, data) )
 
-*** callback *** 
-    argument is an object with 3 members: buy, sell and datetime. Datetime's format is ISO8601 and is suitable for
+Query all supported sources and return results from the most recently updated source.
+
+#### Example Response:
+
+``` json
+{ date: Fri Oct 24 2014 14:27:32 GMT-0700 (PDT),
+  source: 
+   { name: 'LaNacion',
+     uri: 'http://contenidos.lanacion.com.ar/json/dolar' },
+  data: 
+   { Date: '2014-10-24T00:00:00-03:00',
+     CasaCambioVentaValue: '8,49',
+     BolsaCompraValue: '13,37',
+     BolsaVentaValue: '13,37',
+     InformalVentaValue: '14,7',
+     CasaCambioCompraValue: '8,49',
+     InformalCompraValue: '14,58' },
+  rates: 
+   { buy: 14.58,
+     sell: 14.7,
+     source: 'LaNacion',
+     date: Thu Oct 23 2014 20:00:00 GMT-0700 (PDT) },
+  LaNacion: 
+   { Date: '2014-10-24T00:00:00-03:00',
+     CasaCambioVentaValue: '8,49',
+     BolsaCompraValue: '13,37',
+     BolsaVentaValue: '13,37',
+     InformalVentaValue: '14,7',
+     CasaCambioCompraValue: '8,49',
+     InformalCompraValue: '14,58' } }
+```
+
+#### Notes:
+
+Date values are in ISO8601 format and are suitable for
 ``` javascript
-    var date = new Date(data.datetime);
+    var date = new Date(data.date);
 ```
 
-This will try all currently supported sources (e.g.: [LaNacion](http://contenidos.lanacion.com.ar/json/dolar), [Bluelytics](http://api.bluelytics.com.ar/json/last_price)) and return results from the one with the most recent data.
+Alternatively, you can explicitly specify a source to use (see list of sources below for acceptable values):
 
-Alternatively, you can explicitly specify a source to use:
-
-```
+``` javascript
 dolarblue({src:"LaNacion"}, callback);
 dolarblue({src:"Bluelytics"}, callback);
 ```
+
+## Sources
+
+* [LaNacion](http://contenidos.lanacion.com.ar/json/dolar)
+* [Bluelytics](http://api.bluelytics.com.ar/json/last_price)
 
 ## TODO
 Support more data sources.
