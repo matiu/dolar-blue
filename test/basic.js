@@ -63,7 +63,7 @@ describe('exchange rates', function(){
         '"InformalCompraValue":""});'
       );
 
-      var bluelytics = nock('http://bluelytics.com.ar').get('/json/last_price').reply(200, 
+      var bluelytics = nock('http://api.bluelytics.com.ar').get('/json/last_price').reply(200, 
         [{"date": "2014-09-02T15:00:00",
         "source": "dolarblue.net",
         "value_avg": 14.00,
@@ -136,7 +136,7 @@ describe('exchange rates', function(){
         'blah_blah_blah_abcd1234'
       );
 
-      var bluelytics = nock('http://bluelytics.com.ar').get('/json/last_price').reply(200, 
+      var bluelytics = nock('http://api.bluelytics.com.ar').get('/json/last_price').reply(200, 
         [{"date": "2014-09-02T15:00:00",
         "source": "dolarblue.net",
         "value_avg": 14.00,
@@ -209,7 +209,7 @@ describe('exchange rates', function(){
         'blah_blah_blah_abcd1234'
       );
 
-      var bluelytics = nock('http://bluelytics.com.ar').get('/json/last_price').reply(200, 
+      var bluelytics = nock('http://api.bluelytics.com.ar').get('/json/last_price').reply(200, 
         'blah_blah_blah_abcd1234'
       );
 
@@ -224,7 +224,7 @@ describe('exchange rates', function(){
     it('should try bluelytics after 404 from lanacion', function(done) {
       var before = new Date();
       var contenidos = nock('http://contenidos.lanacion.com.ar').get('/json/dolar').reply(404);
-      var bluelytics = nock('http://bluelytics.com.ar').get('/json/last_price').reply(200, 
+      var bluelytics = nock('http://api.bluelytics.com.ar').get('/json/last_price').reply(200, 
         [{"date": "2014-09-02T15:00:00",
         "source": "dolarblue.net",
         "value_avg": 14.00,
@@ -294,7 +294,7 @@ describe('exchange rates', function(){
     it('should exclude la_nacion', function(done) {
       var before = new Date();
       var contenidos = nock('http://contenidos.lanacion.com.ar').get('/json/dolar').reply(404);
-      var bluelytics = nock('http://bluelytics.com.ar').get('/json/last_price').reply(200, 
+      var bluelytics = nock('http://api.bluelytics.com.ar').get('/json/last_price').reply(200, 
         [{"date": "2014-09-02T15:00:00",
         "source": "dolarblue.net",
         "value_avg": 14.00,
@@ -363,7 +363,7 @@ describe('exchange rates', function(){
 
     it('should exclude handle 404 to both sources', function(done) {
       var contenidos = nock('http://contenidos.lanacion.com.ar').get('/json/dolar').reply(404);
-      var bluelytics = nock('http://bluelytics.com.ar').get('/json/last_price').reply(404);
+      var bluelytics = nock('http://api.bluelytics.com.ar').get('/json/last_price').reply(404);
       dolarblue.getData(function(err, data) {
         should.exist(err);
         should.not.exist(data);
@@ -433,7 +433,7 @@ describe('exchange rates', function(){
   describe('getData({src:Bluelytics})', function() {
     it('should return current dolar blue BUY and SELL rate, and a datetime', function(done) {
       var before = new Date();
-      var bluelytics = nock('http://bluelytics.com.ar').get('/json/last_price').reply(200, 
+      var bluelytics = nock('http://api.bluelytics.com.ar').get('/json/last_price').reply(200, 
         [{"date": "2014-09-02T15:00:00",
         "source": "dolarblue.net",
         "value_avg": 14.00,
@@ -502,7 +502,7 @@ describe('exchange rates', function(){
     it('should handle bad response from bluelytics', function(done) {
       var before = new Date();
 
-      var bluelytics = nock('http://bluelytics.com.ar').get('/json/last_price').reply(200, 
+      var bluelytics = nock('http://api.bluelytics.com.ar').get('/json/last_price').reply(200, 
         'blah_blah_blah_abcd1234'
       );
 
