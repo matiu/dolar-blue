@@ -27,7 +27,9 @@ Query all supported sources and return results from the most recently updated so
 
 #### Example Response:
 
-``` json
+The following is an example of the JavaScript object returned by a successful result
+
+``` javascript
 { date: Fri Oct 24 2014 14:27:32 GMT-0700 (PDT),
   source: 
    { name: 'LaNacion',
