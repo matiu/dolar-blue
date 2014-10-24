@@ -5,7 +5,8 @@
   "dependencies": {
     "chai": "*",
     "nock": "*",
-    "sinon": "*"
+    "sinon": "*",
+    "lodash": "^2.4.1"
   },
   "author": {
     "name": "Matias Alejo Garcia",
