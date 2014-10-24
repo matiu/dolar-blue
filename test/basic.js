@@ -11,6 +11,7 @@ describe('Exchange rates', function(){
   describe('::getData', function(){
 
     it ('should prefer data from LaNacion if LaNacion\'s data is more recent', function (done) {
+      var before = new Date();
 
       // Prepare nocks
       nocks.LaNacion.newer();
@@ -18,6 +19,7 @@ describe('Exchange rates', function(){
 
       // Execute
       dolarblue.getData(function (err, data) {
+        var after = new Date();
         should.not.exist(err);
         should.exist(data.LaNacion);
         data.LaNacion.should.deep.equal({
@@ -40,6 +42,7 @@ describe('Exchange rates', function(){
     });
 
     it('should prefer data from Bluelytics if Bluelytics\'s data is more recent', function (done) {
+      var before = new Date();
 
       // Prepare nocks
       nocks.LaNacion.normal();
@@ -47,6 +50,7 @@ describe('Exchange rates', function(){
 
       // Execute
       dolarblue.getData(function(err, data) {
+        var after = new Date();
         should.not.exist(err);
         should.exist(data.Bluelytics);
         data.Bluelytics.should.deep.equal([
@@ -82,7 +86,7 @@ describe('Exchange rates', function(){
     });
 
     it('should return current dolar blue BUY and SELL rate, and a datetime', function (done) {
-      var before = new Date;
+      var before = new Date();
 
       // Prepare nocks
       nocks.LaNacion.newer();
@@ -94,12 +98,12 @@ describe('Exchange rates', function(){
         should.not.exist(err);
         should.exist(data);
         should.exist(data.date);
-        should.exist(data.LaNacion);
         should.exist(data.rates);
         should.exist(data.rates.buy);
         should.exist(data.rates.sell);
         data.date.getTime().should.be.at.least(before.getTime());
         data.date.getTime().should.be.at.most(after.getTime());
+        should.exist(data.LaNacion);
         data.LaNacion.should.deep.equal({
           Date: '2014-10-01T00:00:00',
           CasaCambioVentaValue: '8,44',
@@ -120,6 +124,7 @@ describe('Exchange rates', function(){
     });
 
     it('should ignore incomplete response from LaNacion', function (done) {
+      var before = new Date();
       
       // Prepare nocks
       nocks.LaNacion.incomplete();
@@ -127,8 +132,15 @@ describe('Exchange rates', function(){
 
       // Execute
       dolarblue.getData(function(err, data) {
+        var after = new Date();
         should.not.exist(err);
         should.exist(data);
+        should.exist(data.date);
+        should.exist(data.rates);
+        should.exist(data.rates.buy);
+        should.exist(data.rates.sell);
+        data.date.getTime().should.be.at.least(before.getTime());
+        data.date.getTime().should.be.at.most(after.getTime());
         should.not.exist(data.LaNacion);
         should.exist(data.Bluelytics);
         data.Bluelytics.should.deep.equal([
@@ -164,6 +176,7 @@ describe('Exchange rates', function(){
     });
 
     it('should ignore incomplete response from Bluelytics', function (done) {
+      var before = new Date();
       
       // Prepare nocks
       nocks.LaNacion.normal();
@@ -171,8 +184,15 @@ describe('Exchange rates', function(){
 
       // Execute
       dolarblue.getData(function(err, data) {
+        var after = new Date();
         should.not.exist(err);
         should.exist(data);
+        should.exist(data.date);
+        should.exist(data.rates);
+        should.exist(data.rates.buy);
+        should.exist(data.rates.sell);
+        data.date.getTime().should.be.at.least(before.getTime());
+        data.date.getTime().should.be.at.most(after.getTime());
         should.not.exist(data.LaNacion);
         should.exist(data.Bluelytics);
         data.Bluelytics.should.deep.equal([
@@ -208,6 +228,7 @@ describe('Exchange rates', function(){
     });
 
     it('should handle bad response from LaNacion', function(done) {
+      var before = new Date();
 
       // Prepare nocks
       nocks.LaNacion.bad();
@@ -215,10 +236,17 @@ describe('Exchange rates', function(){
 
       // Execute
       dolarblue.getData(function(err, data) {
+        var after = new Date();
         should.not.exist(err);
         should.exist(data);
-        should.exist(data.Bluelytics);
+        should.exist(data.date);
+        should.exist(data.rates);
+        should.exist(data.rates.buy);
+        should.exist(data.rates.sell);
+        data.date.getTime().should.be.at.least(before.getTime());
+        data.date.getTime().should.be.at.most(after.getTime());
         should.not.exist(data.LaNacion);
+        should.exist(data.Bluelytics);
         data.Bluelytics.should.deep.equal([
           {"date": "2014-09-02T15:00:00",
           "source": "dolarblue.net",
@@ -252,6 +280,7 @@ describe('Exchange rates', function(){
     });
 
     it('should handle bad response from Bluelytics', function(done) {
+      var before = new Date();
 
       // Prepare nocks
       nocks.LaNacion.normal();
@@ -259,8 +288,15 @@ describe('Exchange rates', function(){
 
       // Execute
       dolarblue.getData(function(err, data) {
+        var after = new Date();
         should.not.exist(err);
         should.exist(data);
+        should.exist(data.date);
+        should.exist(data.rates);
+        should.exist(data.rates.buy);
+        should.exist(data.rates.sell);
+        data.date.getTime().should.be.at.least(before.getTime());
+        data.date.getTime().should.be.at.most(after.getTime());
         should.not.exist(data.Bluelytics);
         should.exist(data.LaNacion);
         data.LaNacion.should.deep.equal({
@@ -283,14 +319,13 @@ describe('Exchange rates', function(){
     });
 
     it('should handle bad response from both', function(done) {
-      var before = new Date();
-      
       // Prepare nocks
       nocks.LaNacion.bad();
       nocks.Bluelytics.bad();
 
       // Execute
       dolarblue.getData(function(err, data) {
+        var after = new Date();
         should.exist(err);
         should.not.exist(data);
         err.should.equal('no data');
@@ -299,6 +334,7 @@ describe('Exchange rates', function(){
     });
 
     it('should try Bluelytics after 404 from LaNacion', function(done) {
+      var before = new Date();
       
       // Prepare nocks
       nocks.LaNacion.notfound();
@@ -306,8 +342,15 @@ describe('Exchange rates', function(){
 
       // Execute
       dolarblue.getData(function(err, data) {
+        var after = new Date();
         should.not.exist(err);
         should.exist(data);
+        should.exist(data.date);
+        should.exist(data.rates);
+        should.exist(data.rates.buy);
+        should.exist(data.rates.sell);
+        data.date.getTime().should.be.at.least(before.getTime());
+        data.date.getTime().should.be.at.most(after.getTime());
         should.not.exist(data.LaNacion);
         should.exist(data.Bluelytics);
         data.Bluelytics.should.deep.equal([
@@ -343,6 +386,7 @@ describe('Exchange rates', function(){
     });
 
     it('should exclude LaNacion data if missing from Bluelytics', function(done) {
+      var before = new Date();
 
       // Prepare nocks
       nocks.LaNacion.notfound();
@@ -371,10 +415,17 @@ describe('Exchange rates', function(){
 
       // Execute
       dolarblue.getData(function(err, data) {
+        var after = new Date();
         should.not.exist(err);
         should.exist(data);
-        should.exist(data.Bluelytics);
+        should.exist(data.date);
+        should.exist(data.rates);
+        should.exist(data.rates.buy);
+        should.exist(data.rates.sell);
+        data.date.getTime().should.be.at.least(before.getTime());
+        data.date.getTime().should.be.at.most(after.getTime());
         should.not.exist(data.LaNacion);
+        should.exist(data.Bluelytics);
         data.Bluelytics.should.deep.equal([
           {"date": "2014-09-02T15:00:00",
           "source": "dolarblue.net",
@@ -414,6 +465,7 @@ describe('Exchange rates', function(){
 
       // Execute
       dolarblue.getData(function(err, data) {
+        var after = new Date();
         should.exist(err);
         should.not.exist(data);
         err.should.equal('no data');
@@ -424,16 +476,23 @@ describe('Exchange rates', function(){
 
   describe('::getData({src:LaNacion})', function () {
     it('should return current dolar blue BUY and SELL rate, and a datetime', function (done) {
+      var before = new Date();
 
       // Prepare nocks
       nocks.LaNacion.normal();
 
       // Execute
       dolarblue.getData({src:'LaNacion'}, function(err, data) {
+        var after = new Date();
         should.not.exist(err);
         should.exist(data);
-        should.exist(data.LaNacion);
+        should.exist(data.date);
         should.exist(data.rates);
+        should.exist(data.rates.buy);
+        should.exist(data.rates.sell);
+        data.date.getTime().should.be.at.least(before.getTime());
+        data.date.getTime().should.be.at.most(after.getTime());
+        should.exist(data.LaNacion);
         data.LaNacion.should.deep.equal({
           Date: '2014-08-22T00:00:00',
           CasaCambioVentaValue: '8,44',
@@ -454,7 +513,6 @@ describe('Exchange rates', function(){
     });
 
     it('should handle bad response from LaNacion', function(done) {
-      var before = new Date();
       
       // Prepare nocks
       nocks.LaNacion.bad();
@@ -469,6 +527,7 @@ describe('Exchange rates', function(){
     });
 
     it('should handle 404 response from LaNacion', function(done) {
+
       // Prepare nocks
       nocks.LaNacion.notfound();
 
@@ -495,13 +554,13 @@ describe('Exchange rates', function(){
         should.not.exist(err);
         should.exist(data);
         should.exist(data.date);
-        should.exist(data.Bluelytics);
-        should.not.exist(data.LaNacion);
         should.exist(data.rates);
         should.exist(data.rates.buy);
         should.exist(data.rates.sell);
         data.date.getTime().should.be.at.least(before.getTime());
         data.date.getTime().should.be.at.most(after.getTime());
+        should.not.exist(data.LaNacion);
+        should.exist(data.Bluelytics);
         data.Bluelytics.should.deep.equal([
           {"date": "2014-09-02T15:00:00",
           "source": "dolarblue.net",
@@ -535,8 +594,6 @@ describe('Exchange rates', function(){
     });
 
     it('should handle bad response from bluelytics', function(done) {
-      var before = new Date();
-
       // Prepare nocks
       nocks.Bluelytics.bad();
 
@@ -573,6 +630,5 @@ describe('Exchange rates', function(){
       });
     });
   });
-
 
 });
