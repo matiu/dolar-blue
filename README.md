@@ -27,7 +27,9 @@ Query all supported sources and return results from the most recently updated so
 
 #### Example Response:
 
-``` json
+The following is an example of the JavaScript object returned by a successful result:
+
+``` javascript
 { date: Fri Oct 24 2014 14:27:32 GMT-0700 (PDT),
   source: 
    { name: 'LaNacion',
@@ -58,8 +60,9 @@ Query all supported sources and return results from the most recently updated so
 #### Notes:
 
 Date values are in ISO8601 format and are suitable for
+
 ``` javascript
-    var date = new Date(data.date);
+var date = new Date(data.date);
 ```
 
 Alternatively, you can explicitly specify a source to use (see list of sources below for acceptable values):
@@ -75,7 +78,31 @@ dolarblue({src:"Bluelytics"}, callback);
 * [Bluelytics](http://api.bluelytics.com.ar/json/last_price)
 
 ## TODO
-Support more data sources.
+
+Add support for additional data sources.
 
 ## Licence
-MIT
+
+```
+The MIT License (MIT)
+
+Copyright (c) 2014 Matias Alejo Garcia.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+```
