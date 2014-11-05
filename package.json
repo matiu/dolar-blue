@@ -1,5 +1,5 @@
 {
-  "name": "dolar-blue",
+  "name": "dolar-blue-enbitcoins",
   "version": "0.1.2",
   "private": false,
   "dependencies": {
@@ -14,12 +14,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/matiu/dolar-blue.git"
+    "url": "git://github.com/enbitcoins/dolar-blue-enbitcoins.git"
   },
   "bugs": {
-    "url": "https://github.com/matiu/dolar-blue/issues"
+    "url": "https://github.com/enbitcoins/dolar-blue-enbitcoins/issues"
   },
-  "homepage": "https://github.com/matiu/dolar-blue",
+  "homepage": "https://github.com/enbitcoins/dolar-blue-enbitcoins",
   "license": "MIT",
   "keywords": [
     "dolar",
