@@ -6,7 +6,6 @@
     "chai": "*",
     "nock": "*",
     "sinon": "*",
-    "lodash": "^2.4.1",
     "moment": "^2.8.3"
   },
   "author": {
