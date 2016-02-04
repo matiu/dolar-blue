@@ -69,13 +69,13 @@ Alternatively, you can explicitly specify a source to use (see list of sources b
 
 ``` javascript
 dolarblue({src:"LaNacion"}, callback);
-dolarblue({src:"Bluelytics"}, callback); //not available for the moment
+dolarblue({src:"Bluelytics"}, callback);
 ```
 
 ## Sources
 
 * [LaNacion](http://contenidos.lanacion.com.ar/json/dolar)
-* [Bluelytics](http://api.bluelytics.com.ar/json/last_price) //not available for the moment
+* [Bluelytics](http://api.bluelytics.com.ar/json/last_price)
 
 ## TODO
 

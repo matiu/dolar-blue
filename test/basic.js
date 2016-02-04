@@ -6,11 +6,11 @@ var should = require('chai').should();
 var sinon = require('sinon');
 
 
-describe('Exchange rates', function(){  
-  
-  describe('::getData', function(){
+describe('Exchange rates', function() {
 
-    it ('should prefer data from LaNacion if LaNacion\'s data is more recent', function (done) {
+  describe('::getData', function() {
+
+    it('should prefer data from LaNacion if LaNacion\'s data is more recent', function(done) {
       var before = new Date();
 
       // Prepare nocks
@@ -18,30 +18,30 @@ describe('Exchange rates', function(){
       nocks.Bluelytics.normal();
 
       // Execute
-      dolarblue.getData(function (err, data) {
+      dolarblue.getData(function(err, data) {
         var after = new Date();
         should.not.exist(err);
         should.exist(data.LaNacion);
         data.LaNacion.should.deep.equal({
-          Date: '2014-10-01T00:00:00',
-          CasaCambioVentaValue: '8,44',
+          Date: '2016-01-25T00:00:00',
+          CasaCambioVentaValue: '14,06',
           BolsaCompraValue: '',
           BolsaVentaValue: '',
-          InformalVentaValue: '13,7',
-          CasaCambioCompraValue: '8,37',
-          InformalCompraValue: '13,6'
+          InformalVentaValue: '',
+          CasaCambioCompraValue: '13,69',
+          InformalCompraValue: ''
         });
         data.rates.should.deep.equal({
-          buy: 13.6,
-          sell: 13.7,
+          buy: 13.69,
+          sell: 14.06,
           source: 'LaNacion',
-          date: new Date('2014-10-01T00:00:00')
+          date: new Date('2016-01-25T00:00:00')
         });
         done();
       });
     });
 
-    it('should prefer data from Bluelytics if Bluelytics\'s data is more recent', function (done) {
+    it('should prefer data from Bluelytics if Bluelytics\'s data is more recent', function(done) {
       var before = new Date();
 
       // Prepare nocks
@@ -53,39 +53,42 @@ describe('Exchange rates', function(){
         var after = new Date();
         should.not.exist(err);
         should.exist(data.Bluelytics);
-        data.Bluelytics.should.deep.equal([
-          {"date": "2014-11-01T15:00:00",
-          "source": "dolarblue.net",
-          "value_avg": 14.00,
-          "value_sell": 14.5,
-          "value_buy": 13.5},
-          {"date": "2014-11-01T15:00:00",
+        data.Bluelytics.should.deep.equal([{
+          "date": "2016-01-25T00:00:00",
+          "source": "elcronista",
+          "value_avg": 14.255,
+          "value_sell": 14.28,
+          "value_buy": 14.23
+        }, {
+          "date": "2016-01-25T00:00:00",
           "source": "ambito_financiero",
-          "value_avg": 15.00,
-          "value_sell": 15.5,
-          "value_buy": 14.5},
-          {"date": "2014-11-01T15:00:00",
+          "value_avg": 14.19,
+          "value_sell": 14.39,
+          "value_buy": 13.99
+        }, {
+          "date": "2016-01-25T00:00:00",
           "source": "la_nacion",
-          "value_avg": 16.00,
-          "value_sell": 16.5,
-          "value_buy": 15.5},
-          {"date": "2014-11-01T15:00:00",
+          "value_avg": 1,
+          "value_sell": 1,
+          "value_buy": 1
+        }, {
+          "date": "2016-01-25T00:00:00",
           "source": "oficial",
-          "value_avg": 8.395,
-          "value_sell": 8.42,
-          "value_buy": 8.37}
-        ]);
+          "value_avg": 14.18,
+          "value_sell": 14.38,
+          "value_buy": 13.98
+        }]);
         data.rates.should.deep.equal({
-          buy: 14.5,
-          sell: 15.5,
+          buy: 14.0667,
+          sell: 14.35,
           source: 'Bluelytics',
-          date: new Date('2014-11-01T15:00:00')
+          date: new Date('2016-01-25T00:00:00')
         });
         done();
       });
     });
 
-    it('should return current dolar blue BUY and SELL rate, and a datetime', function (done) {
+    it('should return current dolar blue BUY and SELL rate, and a datetime', function(done) {
       var before = new Date();
 
       // Prepare nocks
@@ -105,27 +108,27 @@ describe('Exchange rates', function(){
         data.date.getTime().should.be.at.most(after.getTime());
         should.exist(data.LaNacion);
         data.LaNacion.should.deep.equal({
-          Date: '2014-10-01T00:00:00',
-          CasaCambioVentaValue: '8,44',
+          Date: '2016-01-25T00:00:00',
+          CasaCambioVentaValue: '14,06',
           BolsaCompraValue: '',
           BolsaVentaValue: '',
-          InformalVentaValue: '13,7',
-          CasaCambioCompraValue: '8,37',
-          InformalCompraValue: '13,6'
+          InformalVentaValue: '',
+          CasaCambioCompraValue: '13,69',
+          InformalCompraValue: ''
         });
         data.rates.should.deep.equal({
-          buy: 13.6,
-          sell: 13.7,
+          buy: 13.69,
+          sell: 14.06,
           source: 'LaNacion',
-          date: new Date('2014-10-01T00:00:00')
+          date: new Date('2016-01-25T00:00:00')
         });
         done();
       });
     });
 
-    it('should ignore incomplete response from LaNacion', function (done) {
+    it('should ignore incomplete response from LaNacion', function(done) {
       var before = new Date();
-      
+
       // Prepare nocks
       nocks.LaNacion.incomplete();
       nocks.Bluelytics.normal();
@@ -143,41 +146,44 @@ describe('Exchange rates', function(){
         data.date.getTime().should.be.at.most(after.getTime());
         should.not.exist(data.LaNacion);
         should.exist(data.Bluelytics);
-        data.Bluelytics.should.deep.equal([
-          {"date": "2014-09-02T15:00:00",
-          "source": "dolarblue.net",
-          "value_avg": 14.00,
-          "value_sell": 14.5,
-          "value_buy": 13.5},
-          {"date": "2014-09-02T15:00:00",
+        data.Bluelytics.should.deep.equal([{
+          "date": "2016-01-04T09:50:10.971586-03:00",
+          "source": "elcronista",
+          "value_avg": 14.255,
+          "value_sell": 14.28,
+          "value_buy": 14.23
+        }, {
+          "date": "2016-01-04T09:50:04.293272-03:00",
           "source": "ambito_financiero",
-          "value_avg": 15.00,
-          "value_sell": 15.5,
-          "value_buy": 14.5},
-          {"date": "2014-09-02T15:00:00",
+          "value_avg": 14.19,
+          "value_sell": 14.39,
+          "value_buy": 13.99
+        }, {
+          "date": "2015-12-17T10:00:07.974569-03:00",
           "source": "la_nacion",
-          "value_avg": 16.00,
-          "value_sell": 16.5,
-          "value_buy": 15.5},
-          {"date": "2014-09-02T15:00:00",
+          "value_avg": 1,
+          "value_sell": 1,
+          "value_buy": 1
+        }, {
+          "date": "2016-01-04T09:50:09.274220-03:00",
           "source": "oficial",
-          "value_avg": 8.395,
-          "value_sell": 8.42,
-          "value_buy": 8.37}
-        ]);
+          "value_avg": 14.18,
+          "value_sell": 14.38,
+          "value_buy": 13.98
+        }]);
         data.rates.should.deep.equal({
-          buy: 14.5,
-          sell: 15.5,
+          buy: 14.0667,
+          sell: 14.35,
           source: 'Bluelytics',
-          date: new Date('2014-09-02T15:00:00')
+          date: new Date('2016-01-04T09:50:10.971586-03:00')
         });
         done();
       });
     });
 
-    it('should ignore incomplete response from Bluelytics', function (done) {
+    it('should ignore incomplete response from Bluelytics', function(done) {
       var before = new Date();
-      
+
       // Prepare nocks
       nocks.LaNacion.normal();
       nocks.Bluelytics.incomplete();
@@ -195,33 +201,36 @@ describe('Exchange rates', function(){
         data.date.getTime().should.be.at.most(after.getTime());
         should.not.exist(data.LaNacion);
         should.exist(data.Bluelytics);
-        data.Bluelytics.should.deep.equal([
-          {"date": "2014-09-02T15:00:00",
-          "source": "dolarblue.net",
+        data.Bluelytics.should.deep.equal([{
+          "date": "2016-01-04T09:50:10.971586-03:00",
+          "source": "elcronista",
           "value_avg": '',
           "value_sell": '',
-          "value_buy": ''},
-          {"date": "2014-09-02T15:00:00",
+          "value_buy": ''
+        }, {
+          "date": "2016-01-04T09:50:04.293272-03:00",
           "source": "ambito_financiero",
-          "value_avg": 15.00,
-          "value_sell": 15.5,
-          "value_buy": 14.5},
-          {"date": "2014-09-02T15:00:00",
+          "value_avg": 14.19,
+          "value_sell": 14.39,
+          "value_buy": 13.99
+        }, {
+          "date": "2015-12-17T10:00:07.974569-03:00",
           "source": "la_nacion",
+          "value_avg": 1,
+          "value_sell": 1,
+          "value_buy": 1
+        }, {
+          "date": "2016-01-04T09:50:09.274220-03:00",
+          "source": "oficial",
           "value_avg": '',
           "value_sell": '',
-          "value_buy": ''},
-          {"date": "2014-09-02T15:00:00",
-          "source": "oficial",
-          "value_avg": 8.395,
-          "value_sell": 8.42,
-          "value_buy": 8.37}
-        ]);
+          "value_buy": ''
+        }]);
         data.rates.should.deep.equal({
-          buy: 14.5,
-          sell: 15.5,
+          buy: 13.99,
+          sell: 14.39,
           source: 'Bluelytics',
-          date: new Date('2014-09-02T15:00:00')
+          date: new Date('2016-01-04T09:50:04.293272-03:00')
         });
         done();
       });
@@ -247,33 +256,36 @@ describe('Exchange rates', function(){
         data.date.getTime().should.be.at.most(after.getTime());
         should.not.exist(data.LaNacion);
         should.exist(data.Bluelytics);
-        data.Bluelytics.should.deep.equal([
-          {"date": "2014-09-02T15:00:00",
-          "source": "dolarblue.net",
-          "value_avg": 14.00,
-          "value_sell": 14.5,
-          "value_buy": 13.5},
-          {"date": "2014-09-02T15:00:00",
+        data.Bluelytics.should.deep.equal([{
+          "date": "2016-01-04T09:50:10.971586-03:00",
+          "source": "elcronista",
+          "value_avg": 14.255,
+          "value_sell": 14.28,
+          "value_buy": 14.23
+        }, {
+          "date": "2016-01-04T09:50:04.293272-03:00",
           "source": "ambito_financiero",
-          "value_avg": 15.00,
-          "value_sell": 15.5,
-          "value_buy": 14.5},
-          {"date": "2014-09-02T15:00:00",
+          "value_avg": 14.19,
+          "value_sell": 14.39,
+          "value_buy": 13.99
+        }, {
+          "date": "2015-12-17T10:00:07.974569-03:00",
           "source": "la_nacion",
-          "value_avg": 16.00,
-          "value_sell": 16.5,
-          "value_buy": 15.5},
-          {"date": "2014-09-02T15:00:00",
+          "value_avg": 1,
+          "value_sell": 1,
+          "value_buy": 1
+        }, {
+          "date": "2016-01-04T09:50:09.274220-03:00",
           "source": "oficial",
-          "value_avg": 8.395,
-          "value_sell": 8.42,
-          "value_buy": 8.37}
-        ]);
+          "value_avg": 14.18,
+          "value_sell": 14.38,
+          "value_buy": 13.98
+        }]);
         data.rates.should.deep.equal({
-          buy: 14.5,
-          sell: 15.5,
+          buy: 14.0667,
+          sell: 14.35,
           source: 'Bluelytics',
-          date: new Date('2014-09-02T15:00:00')
+          date: new Date('2016-01-04T09:50:10.971586-03:00')
         });
         done();
       });
@@ -300,19 +312,19 @@ describe('Exchange rates', function(){
         should.not.exist(data.Bluelytics);
         should.exist(data.LaNacion);
         data.LaNacion.should.deep.equal({
-          Date: '2014-08-22T00:00:00',
-          CasaCambioVentaValue: '8,44',
+          Date: '2016-01-04T00:00:00',
+          CasaCambioVentaValue: '14,06',
           BolsaCompraValue: '',
           BolsaVentaValue: '',
-          InformalVentaValue: '13,7',
-          CasaCambioCompraValue: '8,37',
-          InformalCompraValue: '13,6'
+          InformalVentaValue: '',
+          CasaCambioCompraValue: '13,69',
+          InformalCompraValue: ''
         });
         data.rates.should.deep.equal({
-          buy: 13.6,
-          sell: 13.7,
+          buy: 13.69,
+          sell: 14.06,
           source: 'LaNacion',
-          date: new Date('2014-08-22T00:00:00')
+          date: new Date('2016-01-04T00:00:00')
         });
         done();
       });
@@ -335,7 +347,7 @@ describe('Exchange rates', function(){
 
     it('should try Bluelytics after 404 from LaNacion', function(done) {
       var before = new Date();
-      
+
       // Prepare nocks
       nocks.LaNacion.notfound();
       nocks.Bluelytics.normal();
@@ -353,65 +365,71 @@ describe('Exchange rates', function(){
         data.date.getTime().should.be.at.most(after.getTime());
         should.not.exist(data.LaNacion);
         should.exist(data.Bluelytics);
-        data.Bluelytics.should.deep.equal([
-          {"date": "2014-09-02T15:00:00",
-          "source": "dolarblue.net",
-          "value_avg": 14.00,
-          "value_sell": 14.5,
-          "value_buy": 13.5},
-          {"date": "2014-09-02T15:00:00",
+        data.Bluelytics.should.deep.equal([{
+          "date": "2016-01-04T09:50:10.971586-03:00",
+          "source": "elcronista",
+          "value_avg": 14.255,
+          "value_sell": 14.28,
+          "value_buy": 14.23
+        }, {
+          "date": "2016-01-04T09:50:04.293272-03:00",
           "source": "ambito_financiero",
-          "value_avg": 15.00,
-          "value_sell": 15.5,
-          "value_buy": 14.5},
-          {"date": "2014-09-02T15:00:00",
+          "value_avg": 14.19,
+          "value_sell": 14.39,
+          "value_buy": 13.99
+        }, {
+          "date": "2015-12-17T10:00:07.974569-03:00",
           "source": "la_nacion",
-          "value_avg": 16.00,
-          "value_sell": 16.5,
-          "value_buy": 15.5},
-          {"date": "2014-09-02T15:00:00",
+          "value_avg": 1,
+          "value_sell": 1,
+          "value_buy": 1
+        }, {
+          "date": "2016-01-04T09:50:09.274220-03:00",
           "source": "oficial",
-          "value_avg": 8.395,
-          "value_sell": 8.42,
-          "value_buy": 8.37}
-        ]);
+          "value_avg": 14.18,
+          "value_sell": 14.38,
+          "value_buy": 13.98
+        }]);
         data.rates.should.deep.equal({
-          buy: 14.5,
-          sell: 15.5,
+          buy: 14.0667,
+          sell: 14.35,
           source: 'Bluelytics',
-          date: new Date('2014-09-02T15:00:00')
+          date: new Date('2016-01-04T09:50:10.971586-03:00')
         });
         done();
       });
     });
 
-    it('should exclude LaNacion data if missing from Bluelytics', function(done) {
+    it('should exclude el cronista if missing from Bluelytics', function(done) {
       var before = new Date();
 
       // Prepare nocks
       nocks.LaNacion.notfound();
-      nock('http://api.bluelytics.com.ar').get('/json/last_price').reply(200, 
-        [{"date": "2014-09-02T15:00:00",
-        "source": "dolarblue.net",
-        "value_avg": 14.00,
-        "value_sell": 14.5,
-        "value_buy": 13.5},
-        {"date": "2014-09-02T15:00:00",
+      nock('http://api.bluelytics.com.ar').get('/json/last_price').reply(200, [{
+        "date": "2016-01-04T09:50:10.971586-03:00",
+        "source": "elcronista",
+        "value_avg": '',
+        "value_sell": '',
+        "value_buy": ''
+      }, {
+        "date": "2016-01-04T09:50:04.293272-03:00",
         "source": "ambito_financiero",
-        "value_avg": 15.00,
-        "value_sell": 15.5,
-        "value_buy": 14.5},
-        {"date": "2014-09-02T15:00:00",
+        "value_avg": 14.19,
+        "value_sell": 14.39,
+        "value_buy": 13.99
+      }, {
+        "date": "2015-12-17T10:00:07.974569-03:00",
         "source": "la_nacion",
-        "value_avg": 0,
-        "value_sell": 0,
-        "value_buy": 0},
-        {"date": "2014-09-02T15:00:00",
+        "value_avg": 1,
+        "value_sell": 1,
+        "value_buy": 1
+      }, {
+        "date": "2016-01-04T09:50:09.274220-03:00",
         "source": "oficial",
-        "value_avg": 8.395,
-        "value_sell": 8.42,
-        "value_buy": 8.37}]
-      );
+        "value_avg": 14.18,
+        "value_sell": 14.38,
+        "value_buy": 13.98
+      }]);
 
       // Execute
       dolarblue.getData(function(err, data) {
@@ -426,33 +444,36 @@ describe('Exchange rates', function(){
         data.date.getTime().should.be.at.most(after.getTime());
         should.not.exist(data.LaNacion);
         should.exist(data.Bluelytics);
-        data.Bluelytics.should.deep.equal([
-          {"date": "2014-09-02T15:00:00",
-          "source": "dolarblue.net",
-          "value_avg": 14.00,
-          "value_sell": 14.5,
-          "value_buy": 13.5},
-          {"date": "2014-09-02T15:00:00",
+        data.Bluelytics.should.deep.equal([{
+          "date": "2016-01-04T09:50:10.971586-03:00",
+          "source": "elcronista",
+          "value_avg": '',
+          "value_sell": '',
+          "value_buy": ''
+        }, {
+          "date": "2016-01-04T09:50:04.293272-03:00",
           "source": "ambito_financiero",
-          "value_avg": 15.00,
-          "value_sell": 15.5,
-          "value_buy": 14.5},
-          {"date": "2014-09-02T15:00:00",
+          "value_avg": 14.19,
+          "value_sell": 14.39,
+          "value_buy": 13.99
+        }, {
+          "date": "2015-12-17T10:00:07.974569-03:00",
           "source": "la_nacion",
-          "value_avg": 0,
-          "value_sell": 0,
-          "value_buy": 0},
-          {"date": "2014-09-02T15:00:00",
+          "value_avg": 1,
+          "value_sell": 1,
+          "value_buy": 1
+        }, {
+          "date": "2016-01-04T09:50:09.274220-03:00",
           "source": "oficial",
-          "value_avg": 8.395,
-          "value_sell": 8.42,
-          "value_buy": 8.37}
-        ]);
+          "value_avg": 14.18,
+          "value_sell": 14.38,
+          "value_buy": 13.98
+        }]);
         data.rates.should.deep.equal({
-          buy: 14.0,
-          sell: 15.0,
+          buy: 13.985,
+          sell: 14.385,
           source: 'Bluelytics',
-          date: new Date('2014-09-02T15:00:00')
+          date: new Date('2016-01-04T09:50:09.274220-03:00')
         });
         done();
       });
@@ -474,15 +495,18 @@ describe('Exchange rates', function(){
     });
   });
 
-  describe('::getData({src:LaNacion})', function () {
-    it('should return current dolar blue BUY and SELL rate, and a datetime', function (done) {
+  describe('::getData({src:LaNacion})', function() {
+
+    it('should return current dolar blue BUY and SELL rate, and a datetime', function(done) {
       var before = new Date();
 
       // Prepare nocks
       nocks.LaNacion.normal();
 
       // Execute
-      dolarblue.getData({src:'LaNacion'}, function(err, data) {
+      dolarblue.getData({
+        src: 'LaNacion'
+      }, function(err, data) {
         var after = new Date();
         should.not.exist(err);
         should.exist(data);
@@ -494,31 +518,33 @@ describe('Exchange rates', function(){
         data.date.getTime().should.be.at.most(after.getTime());
         should.exist(data.LaNacion);
         data.LaNacion.should.deep.equal({
-          Date: '2014-08-22T00:00:00',
-          CasaCambioVentaValue: '8,44',
+          Date: '2016-01-04T00:00:00',
+          CasaCambioVentaValue: '14,06',
           BolsaCompraValue: '',
           BolsaVentaValue: '',
-          InformalVentaValue: '13,7',
-          CasaCambioCompraValue: '8,37',
-          InformalCompraValue: '13,6'
+          InformalVentaValue: '',
+          CasaCambioCompraValue: '13,69',
+          InformalCompraValue: ''
         });
         data.rates.should.deep.equal({
-          buy: 13.6,
-          sell: 13.7,
+          buy: 13.69,
+          sell: 14.06,
           source: 'LaNacion',
-          date: new Date('2014-08-22T00:00:00')
+          date: new Date('2016-01-04T00:00:00')
         });
         done();
       });
     });
 
     it('should handle bad response from LaNacion', function(done) {
-      
+
       // Prepare nocks
       nocks.LaNacion.bad();
 
       // Execute
-      dolarblue.getData({src:'LaNacion'}, function(err, data) {
+      dolarblue.getData({
+        src: 'LaNacion'
+      }, function(err, data) {
         should.exist(err);
         should.not.exist(data);
         err.should.equal('no data');
@@ -532,7 +558,9 @@ describe('Exchange rates', function(){
       nocks.LaNacion.notfound();
 
       // Execute
-      dolarblue.getData(function(err, data) {
+      dolarblue.getData({
+        src: 'LaNacion'
+      }, function(err, data) {
         should.exist(err);
         should.not.exist(data);
         err.should.equal('no data');
@@ -542,14 +570,17 @@ describe('Exchange rates', function(){
   });
 
   describe('::getData({src:Bluelytics})', function() {
-    it('should return current dolar blue BUY and SELL rate, and a datetime', function(done) {
+
+    it('should ignore data from la nacion', function(done) {
       var before = new Date();
-      
+
       // Prepare nocks
       nocks.Bluelytics.normal();
 
       // Execute
-      dolarblue.getData({src:'Bluelytics'}, function(err, data) {
+      dolarblue.getData({
+        src: 'Bluelytics'
+      }, function(err, data) {
         var after = new Date();
         should.not.exist(err);
         should.exist(data);
@@ -561,33 +592,92 @@ describe('Exchange rates', function(){
         data.date.getTime().should.be.at.most(after.getTime());
         should.not.exist(data.LaNacion);
         should.exist(data.Bluelytics);
-        data.Bluelytics.should.deep.equal([
-          {"date": "2014-09-02T15:00:00",
-          "source": "dolarblue.net",
-          "value_avg": 14.00,
-          "value_sell": 14.5,
-          "value_buy": 13.5},
-          {"date": "2014-09-02T15:00:00",
+        data.Bluelytics.should.deep.equal([{
+          "date": "2016-01-04T09:50:10.971586-03:00",
+          "source": "elcronista",
+          "value_avg": 14.255,
+          "value_sell": 14.28,
+          "value_buy": 14.23
+        }, {
+          "date": "2016-01-04T09:50:04.293272-03:00",
           "source": "ambito_financiero",
-          "value_avg": 15.00,
-          "value_sell": 15.5,
-          "value_buy": 14.5},
-          {"date": "2014-09-02T15:00:00",
+          "value_avg": 14.19,
+          "value_sell": 14.39,
+          "value_buy": 13.99
+        }, {
+          "date": "2015-12-17T10:00:07.974569-03:00",
           "source": "la_nacion",
-          "value_avg": 16.00,
-          "value_sell": 16.5,
-          "value_buy": 15.5},
-          {"date": "2014-09-02T15:00:00",
+          "value_avg": 1,
+          "value_sell": 1,
+          "value_buy": 1
+        }, {
+          "date": "2016-01-04T09:50:09.274220-03:00",
           "source": "oficial",
-          "value_avg": 8.395,
-          "value_sell": 8.42,
-          "value_buy": 8.37}
-        ]);
+          "value_avg": 14.18,
+          "value_sell": 14.38,
+          "value_buy": 13.98
+        }]);
         data.rates.should.deep.equal({
-          buy: 14.5,
-          sell: 15.5,
+          buy: 14.0667,
+          sell: 14.35,
           source: 'Bluelytics',
-          date: new Date('2014-09-02T15:00:00')
+          date: new Date('2016-01-04T09:50:10.971586-03:00')
+        });
+        done();
+      });
+    });
+
+    it('should return current dolar blue BUY and SELL rate, and a datetime', function(done) {
+      var before = new Date();
+
+      // Prepare nocks
+      nocks.Bluelytics.normal();
+
+      // Execute
+      dolarblue.getData({
+        src: 'Bluelytics'
+      }, function(err, data) {
+        var after = new Date();
+        should.not.exist(err);
+        should.exist(data);
+        should.exist(data.date);
+        should.exist(data.rates);
+        should.exist(data.rates.buy);
+        should.exist(data.rates.sell);
+        data.date.getTime().should.be.at.least(before.getTime());
+        data.date.getTime().should.be.at.most(after.getTime());
+        should.not.exist(data.LaNacion);
+        should.exist(data.Bluelytics);
+        data.Bluelytics.should.deep.equal([{
+          "date": "2016-01-04T09:50:10.971586-03:00",
+          "source": "elcronista",
+          "value_avg": 14.255,
+          "value_sell": 14.28,
+          "value_buy": 14.23
+        }, {
+          "date": "2016-01-04T09:50:04.293272-03:00",
+          "source": "ambito_financiero",
+          "value_avg": 14.19,
+          "value_sell": 14.39,
+          "value_buy": 13.99
+        }, {
+          "date": "2015-12-17T10:00:07.974569-03:00",
+          "source": "la_nacion",
+          "value_avg": 1,
+          "value_sell": 1,
+          "value_buy": 1
+        }, {
+          "date": "2016-01-04T09:50:09.274220-03:00",
+          "source": "oficial",
+          "value_avg": 14.18,
+          "value_sell": 14.38,
+          "value_buy": 13.98
+        }]);
+        data.rates.should.deep.equal({
+          buy: 14.0667,
+          sell: 14.35,
+          source: 'Bluelytics',
+          date: new Date('2016-01-04T09:50:10.971586-03:00')
         });
         done();
       });
@@ -598,7 +688,9 @@ describe('Exchange rates', function(){
       nocks.Bluelytics.bad();
 
       // Execute
-      dolarblue.getData({src:'Bluelytics'}, function(err, data) {
+      dolarblue.getData({
+        src: 'Bluelytics'
+      }, function(err, data) {
         should.exist(err);
         should.not.exist(data);
         err.should.equal('no data')
@@ -611,7 +703,11 @@ describe('Exchange rates', function(){
       nocks.Bluelytics.notfound();
 
       // Execute
-      dolarblue.getData(function(err, data) {
+      dolarblue.getData({
+        src: 'Bluelytics'
+      }, function(err, data) {
+        console.log(data);
+        console.log(err);
         should.exist(err);
         should.not.exist(data);
         err.should.equal('no data');
@@ -623,7 +719,9 @@ describe('Exchange rates', function(){
 
   describe('::getData({src:ERROR})', function() {
     it('should throw error', function(done) {
-      dolarblue.getData({src:'ERROR'}, function(err, data) {
+      dolarblue.getData({
+        src: 'ERROR'
+      }, function(err, data) {
         assert.ok(err === 'Unknown source provided: ERROR');
         assert.ok(!data);
         done();
