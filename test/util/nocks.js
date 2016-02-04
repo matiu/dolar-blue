@@ -5,129 +5,138 @@ var nock = require('nock');
 
 exports.nocks = {
   LaNacion: {
-    normal: function () {
-      nock('http://contenidos.lanacion.com.ar').get('/json/dolar').reply(200, 
-        'dolarjsonpCallback({"Date":"2014-08-22T00:00:00",' + 
-        '"CasaCambioVentaValue":"8,44",' + 
-        '"BolsaCompraValue":"",' +
-        '"BolsaVentaValue":"",' +
-        '"InformalVentaValue":"13,7",' +
-        '"CasaCambioCompraValue":"8,37",' +
-        '"InformalCompraValue":"13,6"});'
-      );
-    },
-    newer: function () {
-      nock('http://contenidos.lanacion.com.ar').get('/json/dolar').reply(200, 
-        'dolarjsonpCallback({"Date":"2014-10-01T00:00:00",' + 
-        '"CasaCambioVentaValue":"8,44",' + 
-        '"BolsaCompraValue":"",' +
-        '"BolsaVentaValue":"",' +
-        '"InformalVentaValue":"13,7",' +
-        '"CasaCambioCompraValue":"8,37",' +
-        '"InformalCompraValue":"13,6"});'
-      );
-    },
-    incomplete: function () {
-      nock('http://contenidos.lanacion.com.ar').get('/json/dolar').reply(200, 
-        'dolarjsonpCallback({"Date":"2014-08-22T00:00:00",' + 
-        '"CasaCambioVentaValue":"8,44",' + 
+    normal: function() {
+      nock('http://contenidos.lanacion.com.ar').get('/json/dolar').reply(200,
+        'dolarjsonpCallback({"Date":"2016-01-04T00:00:00",' +
+        '"CasaCambioVentaValue":"14,06",' +
         '"BolsaCompraValue":"",' +
         '"BolsaVentaValue":"",' +
         '"InformalVentaValue":"",' +
-        '"CasaCambioCompraValue":"8,37",' +
+        '"CasaCambioCompraValue":"13,69",' +
         '"InformalCompraValue":""});'
       );
     },
-    notfound: function () {
+    newer: function() {
+      nock('http://contenidos.lanacion.com.ar').get('/json/dolar').reply(200,
+        'dolarjsonpCallback({"Date":"2016-01-25T00:00:00",' +
+        '"CasaCambioVentaValue":"14,06",' +
+        '"BolsaCompraValue":"",' +
+        '"BolsaVentaValue":"",' +
+        '"InformalVentaValue":"",' +
+        '"CasaCambioCompraValue":"13,69",' +
+        '"InformalCompraValue":""});'
+      );
+    },
+    incomplete: function() {
+      nock('http://contenidos.lanacion.com.ar').get('/json/dolar').reply(200,
+        'dolarjsonpCallback({"Date":"2016-01-04T00:00:00",' +
+        '"CasaCambioVentaValue":"",' +
+        '"BolsaCompraValue":"",' +
+        '"BolsaVentaValue":"",' +
+        '"InformalVentaValue":"",' +
+        '"CasaCambioCompraValue":"",' +
+        '"InformalCompraValue":""});'
+      );
+    },
+    notfound: function() {
       nock('http://contenidos.lanacion.com.ar').get('/json/dolar').reply(404);
     },
-    bad: function () {
-      nock('http://contenidos.lanacion.com.ar').get('/json/dolar').reply(200, 
+    bad: function() {
+      nock('http://contenidos.lanacion.com.ar').get('/json/dolar').reply(200,
         'blah_blah_blah_abcd1234'
       );
     }
   },
 
   Bluelytics: {
-    normal: function () {
-      nock('http://api.bluelytics.com.ar').get('/json/last_price').reply(200, 
-        [{"date": "2014-09-02T15:00:00",
-        "source": "dolarblue.net",
-        "value_avg": 14.00,
-        "value_sell": 14.5,
-        "value_buy": 13.5},
-        {"date": "2014-09-02T15:00:00",
+    normal: function() {
+      nock('http://api.bluelytics.com.ar').get('/json/last_price').reply(200, [{
+        "date": "2016-01-04T09:50:10.971586-03:00",
+        "source": "elcronista",
+        "value_avg": 14.255,
+        "value_sell": 14.28,
+        "value_buy": 14.23
+      }, {
+        "date": "2016-01-04T09:50:04.293272-03:00",
         "source": "ambito_financiero",
-        "value_avg": 15.00,
-        "value_sell": 15.5,
-        "value_buy": 14.5},
-        {"date": "2014-09-02T15:00:00",
+        "value_avg": 14.19,
+        "value_sell": 14.39,
+        "value_buy": 13.99
+      }, {
+        "date": "2015-12-17T10:00:07.974569-03:00",
         "source": "la_nacion",
-        "value_avg": 16.00,
-        "value_sell": 16.5,
-        "value_buy": 15.5},
-        {"date": "2014-09-02T15:00:00",
+        "value_avg": 1,
+        "value_sell": 1,
+        "value_buy": 1
+      }, {
+        "date": "2016-01-04T09:50:09.274220-03:00",
         "source": "oficial",
-        "value_avg": 8.395,
-        "value_sell": 8.42,
-        "value_buy": 8.37}]
-      );
+        "value_avg": 14.18,
+        "value_sell": 14.38,
+        "value_buy": 13.98
+      }]);
     },
-    newer: function () {
-      nock('http://api.bluelytics.com.ar').get('/json/last_price').reply(200, 
-        [{"date": "2014-11-01T15:00:00",
-        "source": "dolarblue.net",
-        "value_avg": 14.00,
-        "value_sell": 14.5,
-        "value_buy": 13.5},
-        {"date": "2014-11-01T15:00:00",
+    newer: function() {
+      nock('http://api.bluelytics.com.ar').get('/json/last_price').reply(200, [{
+        "date": "2016-01-25T00:00:00",
+        "source": "elcronista",
+        "value_avg": 14.255,
+        "value_sell": 14.28,
+        "value_buy": 14.23
+      }, {
+        "date": "2016-01-25T00:00:00",
         "source": "ambito_financiero",
-        "value_avg": 15.00,
-        "value_sell": 15.5,
-        "value_buy": 14.5},
-        {"date": "2014-11-01T15:00:00",
+        "value_avg": 14.19,
+        "value_sell": 14.39,
+        "value_buy": 13.99
+      }, {
+        "date": "2016-01-25T00:00:00",
         "source": "la_nacion",
-        "value_avg": 16.00,
-        "value_sell": 16.5,
-        "value_buy": 15.5},
-        {"date": "2014-11-01T15:00:00",
+        "value_avg": 1,
+        "value_sell": 1,
+        "value_buy": 1
+      }, {
+        "date": "2016-01-25T00:00:00",
         "source": "oficial",
-        "value_avg": 8.395,
-        "value_sell": 8.42,
-        "value_buy": 8.37}]
-      );
+        "value_avg": 14.18,
+        "value_sell": 14.38,
+        "value_buy": 13.98
+      }]);
     },
-    incomplete: function () {
-      nock('http://api.bluelytics.com.ar').get('/json/last_price').reply(200, 
-        [{"date": "2014-09-02T15:00:00",
-        "source": "dolarblue.net",
+    incomplete: function() {
+      nock('http://api.bluelytics.com.ar').get('/json/last_price').reply(200, [{
+        "date": "2016-01-04T09:50:10.971586-03:00",
+        "source": "elcronista",
         "value_avg": '',
         "value_sell": '',
-        "value_buy": ''},
-        {"date": "2014-09-02T15:00:00",
+        "value_buy": ''
+      }, {
+        "date": "2016-01-04T09:50:04.293272-03:00",
         "source": "ambito_financiero",
-        "value_avg": 15.00,
-        "value_sell": 15.5,
-        "value_buy": 14.5},
-        {"date": "2014-09-02T15:00:00",
+        "value_avg": 14.19,
+        "value_sell": 14.39,
+        "value_buy": 13.99
+      }, {
+        "date": "2015-12-17T10:00:07.974569-03:00",
         "source": "la_nacion",
+        "value_avg": 1,
+        "value_sell": 1,
+        "value_buy": 1
+      }, {
+        "date": "2016-01-04T09:50:09.274220-03:00",
+        "source": "oficial",
         "value_avg": '',
         "value_sell": '',
-        "value_buy": ''},
-        {"date": "2014-09-02T15:00:00",
-        "source": "oficial",
-        "value_avg": 8.395,
-        "value_sell": 8.42,
-        "value_buy": 8.37}]
-      );
+        "value_buy": ''
+      }]);
     },
-    notfound: function () {
+    notfound: function() {
       nock('http://api.bluelytics.com.ar').get('/json/last_price').reply(404);
     },
-    bad: function () {
-      nock('http://api.bluelytics.com.ar').get('/json/last_price').reply(200, 
+    bad: function() {
+      nock('http://api.bluelytics.com.ar').get('/json/last_price').reply(200,
         'blah_blah_blah_abcd1234'
       );
     }
-  } 
+  }
 }
